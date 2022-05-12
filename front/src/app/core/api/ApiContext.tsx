@@ -1,3 +1,4 @@
+import { ApiError, ApiResponse } from "@app/core/api/backend";
 import { createContext, useContext } from "react";
 
 type RequestType = string;
@@ -6,9 +7,6 @@ type RequestArgs = {
   showNotification?: boolean;
   [key: string]: unknown;
 };
-
-export type ApiError = { message: string };
-export type ApiResponse<R> = { data: R };
 
 export interface Api {
   apiRequest: <T extends RequestArgs, R>(

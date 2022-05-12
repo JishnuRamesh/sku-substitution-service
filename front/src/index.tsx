@@ -1,4 +1,4 @@
-
+import theme from "@app/theme";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import React from "react";
 import { render } from "react-dom";
@@ -8,7 +8,7 @@ import App from "./app/App";
 import { AuthProvider } from "./app/core/auth/AuthProvider";
 import { ApiProvider } from "./services/api/ApiProvider";
 
-const customTheme = createTheme();
+const customTheme = createTheme(theme);
 
 render(
   <React.StrictMode>

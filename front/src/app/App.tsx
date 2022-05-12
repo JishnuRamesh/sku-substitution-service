@@ -1,33 +1,37 @@
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { RequireAuth } from "./core/auth/RequireAuth";
 import { HomeView } from "./feature/home/HomeView";
-import { SignInView } from "./feature/sign-in/SignInView";
 import { Layout } from "./layout/Layout";
 
+export type SelectedOption = {
+  recipe_name: string;
+  actual_ingredient: string;
+  substitute_ingredient: string;
+  order_status: string;
+};
+
+export type SelectedOptions = Record<string, SelectedOption>;
+
 export default function App() {
+  const [isDone, setIsDone] = useState<boolean>(false);
+  const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
+
   return (
     <>
-      <br />
-      <br />
-      <br />
       <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<HomeView />} />
-          <Route path="/signin" element={<SignInView />} />
+        <Route element={<Layout onDoneAll={() => setIsDone(true)} />}>
           <Route
-            path="/protected"
+            path="/"
             element={
-              <RequireAuth>
-                <ProtectedPage />
-              </RequireAuth>
+              <HomeView
+                isDone={isDone}
+                onSelected={(options) => setSelectedOptions(options)}
+                selectedOptions={selectedOptions}
+              />
             }
           />
         </Route>
       </Routes>
     </>
   );
-}
-
-function ProtectedPage() {
-  return <HomeView />;
 }
