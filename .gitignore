@@ -152,7 +152,7 @@ coverage
 cache
 
 # env
-src/config/env.json
+env.json
 
 # IDEs and editors
 /.idea
