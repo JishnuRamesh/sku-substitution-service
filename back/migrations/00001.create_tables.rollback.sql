@@ -1,2 +1,4 @@
 drop table customer_order
 drop table customer
+drop table substitute_options
+drop table customer_substitutions
