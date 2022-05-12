@@ -1,6 +1,6 @@
 import { useApiContext } from "@app/core/api/ApiContext";
 import { Notification } from "@app/core/notification/Notification";
-import { Button, Card, Divider } from "@hellofresh/scm-design-system";
+import { Button, Card, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 
 type AlbumApi = {
@@ -57,26 +57,11 @@ export function CardsView() {
           }}
         >
           {cards.map((item: AlbumApi) => (
-            <Card
-              key={item.id}
-              image={item.thumbnailUrl}
-              onSelect={() => {
-                console.log("onSelect");
-              }}
-            >
-              {/* <TopContentExample /> */}
+            <Card key={item.id}>
               <div>{item.title}</div>
               <Divider />
               <div>Bottom</div>
-              <Button
-                color="primary"
-                fullWidth
-                label="Click Me!"
-                onClick={function noRefCheck() {
-                  console.log("onSelect");
-                }}
-                variant="primary"
-              />
+              <Button>Click</Button>
             </Card>
           ))}
         </div>
