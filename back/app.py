@@ -28,7 +28,8 @@ def order(order_id):
             options = Sub_options.select().where(Sub_options.order_id == order_id)
             available_options = [model_to_dict(item) for item in options]
             return {"options_available": available_options}, 200
-        except Exception:
+        except Exception as ex:
+            print(ex)
             return {"msg": "Something went wrong"}, 500
 
 
