@@ -2,8 +2,8 @@ import { createContext, useContext } from "react";
 
 type RequestType = string;
 type RequestArgs = {
-  showLoader: boolean;
-  showNotification: boolean;
+  showLoader?: boolean;
+  showNotification?: boolean;
   [key: string]: unknown;
 };
 

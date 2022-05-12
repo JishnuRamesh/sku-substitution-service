@@ -1,6 +1,6 @@
 import { useAuth } from "@app/core/auth/AuthStatus";
 import ENV from "@config/env.json";
-import { Box, Button } from "@hellofresh/scm-design-system";
+import { Box, Button } from "@mui/material";
 import hfLogoUrl from "assets/hf-logo.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -54,13 +54,8 @@ export function SignInView() {
             Sign in with your Microsoft Azure account
           </p>
 
-          <Button
-            fullWidth
-            color="primary"
-            label="Sign In with Azure"
-            variant="primary"
-          >
-            <Link to="/signin" />
+          <Button>
+            <Link to="/signin">Sign In with Azure</Link>
           </Button>
 
           <br />
