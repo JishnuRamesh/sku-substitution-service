@@ -1,16 +1,28 @@
 import { ApiResponse, SkuSubRequest } from "@app/core/api/backend";
-import { CustomerSwapList } from "@app/feature/home/HomeView";
+import { CustomerSwapOptions } from "@app/feature/home/HomeView";
 import { HttpResponse } from "@services/http/adapters/http-adapter";
 import { PartialRequestConfig } from "@services/http/http-request-map";
 
-type GetOrderResponse = {
-  order_id: string;
-  customer_id: string;
-  customer_name: string;
+type SwapOption = {
+  actual_ingredient: string;
+  order_id: {
+    customer_id: {
+      address: string;
+      customer_id: string;
+      email_address: string;
+      name: string;
+    };
+    customer_swaps: string;
+    order_id: string;
+    week: string;
+  };
   recipe_name: string;
   swap_name: string;
-  actual_ingredient: string;
-  options_available: string[];
+  swap_options: [string, string];
+};
+
+type GetOptionsResponse = {
+  options_available: SwapOption[];
 };
 
 export type SkuSubRequestMap = () => Record<
@@ -32,20 +44,10 @@ export const skuSubApiRequests: SkuSubRequestMap = () => ({
     method: "GET",
     path: ["orderId"],
     transformResponse: (
-      response: HttpResponse<GetOrderResponse[]>
-    ): ApiResponse<CustomerSwapList> => {
+      response: HttpResponse<GetOptionsResponse>
+    ): ApiResponse<CustomerSwapOptions> => {
       return {
-        data: response.data.map((r) => {
-          return {
-            orderId: r.order_id,
-            customerId: r.customer_id,
-            customerName: r.customer_name,
-            recipe: r.recipe_name,
-            swap: r.swap_name,
-            ingredient: r.actual_ingredient,
-            availability: r.options_available,
-          };
-        }),
+        data: response.data,
       };
     },
   },
