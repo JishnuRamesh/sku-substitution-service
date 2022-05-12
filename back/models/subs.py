@@ -56,6 +56,7 @@ class Customer_subs(Model):
 
     class Meta:
         primary_key = CompositeKey('order_id', 'recipe_name')
+        indexes = ((("order_id", "recipe_name"), True),)
         database = db
         table_name = 'customer_substitutions'
 
