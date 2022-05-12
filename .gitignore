@@ -129,6 +129,7 @@ dmypy.json
 .pyre/
 
 
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -173,3 +174,11 @@ src/config/env.json
 # System Files
 .DS_Store
 Thumbs.db
+
+# IDE
+.idea
+.idea/*
+
+# Volumes
+volumes/*
+
