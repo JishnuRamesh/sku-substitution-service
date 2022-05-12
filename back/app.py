@@ -88,7 +88,7 @@ def closeSubstitutionByWeek(week):
                 "order_id": substitute_data.order_id.order_id,
                 "recipe_name": substitute_data.recipe_name,
                 "actual_ingredient": substitute_data.actual_ingredient,
-                "substitute_ingredient": substitute_data.actual_ingredient,
+                "substitute_ingredient": substitute_data.substitute_ingredient,
                 "order_status": substitute_data.order_status,
             }
             export.append(data)
