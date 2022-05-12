@@ -1,5 +1,6 @@
 import { useApiContext } from "@app/core/api/ApiContext";
 import { RecipeSwapCard } from "@app/feature/home/RecipeSwapCard";
+import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 type Order = {
@@ -38,11 +39,13 @@ export type CustomerSwapOptions = {
 
 const SwapOptions: React.FC<CustomerSwapOptions> = (props) => {
   return (
-    <>
+    <Grid container spacing={2}>
       {props.options_available.map((option, index) => (
-        <SwapOption key={`Swap-${index}`} {...option} />
+        <Grid item xs={12} sm={6}>
+          <SwapOption key={`Swap-${index}`} {...option} />
+        </Grid>
       ))}
-    </>
+    </Grid>
   );
 };
 

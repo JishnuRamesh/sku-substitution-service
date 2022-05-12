@@ -1,4 +1,3 @@
-import DoneIcon from "@mui/icons-material/Done";
 import {
   FormControl,
   FormControlLabel,
@@ -6,10 +5,8 @@ import {
   RadioGroup,
 } from "@mui/material";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
@@ -47,7 +44,7 @@ type RecipeSwapProps = {
 };
 export const RecipeSwapCard: React.FC<RecipeSwapProps> = (props) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} style={{ margin: "auto" }}>
       <CardMedia
         component="img"
         height="194"
@@ -63,11 +60,6 @@ export const RecipeSwapCard: React.FC<RecipeSwapProps> = (props) => {
         </Typography>
         <div>{RenderSwapOptions({ options: props.swap_options })}</div>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="save swaps" style={{ marginLeft: "auto" }}>
-          <DoneIcon />
-        </IconButton>
-      </CardActions>
     </Card>
   );
 };
