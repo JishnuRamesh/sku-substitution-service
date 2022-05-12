@@ -32,8 +32,7 @@ def order(order_id):
             options = Sub_options.select().where(Sub_options.order_id == order_id)
             available_options = [model_to_dict(item) for item in options]
             return {"options_available": available_options}, 200
-        except Exception as ex:
-            print(ex)
+        except Exception:
             return {"msg": "Something went wrong"}, 500
 
     elif request.method == 'POST':
@@ -50,8 +49,7 @@ def order(order_id):
                               update={Customer_subs.substitute_ingredient : option['substitute_ingredient'],
                                       Customer_subs.order_status : option['order_status']}, ).execute()
             return {"msg": "success"}, 200
-        except Exception as ex:
-            print(ex)
+        except Exception:
             return {"msg": "Something went wrong"}, 500
 
 
@@ -66,7 +64,7 @@ def closeSubstitutionByWeek(week):
     ]
 
     try:
-        substitutes = Sub_options.select().join(Orders, on=Orders.order_id == Sub_options.order_id).where(
+        substitutes = Customer_subs.select().join(Orders, on=Orders.order_id == Customer_subs.order_id).where(
             Orders.week == week)
         file = io.StringIO()
         writer = csv.DictWriter(file, fieldnames=columns)
@@ -75,7 +73,7 @@ def closeSubstitutionByWeek(week):
         export = []
         for substitute_data in substitutes:
             data = {
-                "order_Id": substitute_data.order_Id,
+                "order_id": substitute_data.order_id.order_id,
                 "recipe_name": substitute_data.recipe_name,
                 "actual_ingredient": substitute_data.actual_ingredient,
                 "substitute_ingredient": substitute_data.actual_ingredient,
@@ -84,9 +82,10 @@ def closeSubstitutionByWeek(week):
             export.append(data)
 
         writer.writerows(export)
-        response = flask.make_response(file.read())
+        response = flask.make_response(file.getvalue().encode("utf-8"))
         response.headers['content-type'] = 'application/octet-stream'
+        response.mimetype="text/csv"
+        response.headers['filename'] = 'customer-sku-subs.csv'
         return response
-    except Exception as ex:
-        print(ex)
+    except Exception:
         return {"msg": "Data was not exported"}, 500
