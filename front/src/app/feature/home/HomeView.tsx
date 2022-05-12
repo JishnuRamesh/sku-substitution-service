@@ -144,6 +144,20 @@ export const HomeView: React.FC<{
     return null;
   }
 
+  if (props.isDone) {
+    return (
+      <div>
+        <h1>Thank you {order?.customer_id.name}!</h1>
+        <h4>Your selections have been recieved.</h4>
+        <p>
+          Happy cooking,
+          <br />
+          The HelloFresh Team
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>
