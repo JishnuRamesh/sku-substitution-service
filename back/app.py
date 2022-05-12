@@ -7,6 +7,7 @@ from playhouse.shortcuts import model_to_dict
 from flask_cors import CORS
 import csv
 import io
+from sqs import SQS
 
 app = Flask(__name__)
 
@@ -17,6 +18,8 @@ CORS(
 )
 
 apply_migrations()
+
+sqs_queue = SQS()
 
 
 @app.route("/")
@@ -48,6 +51,15 @@ def order(order_id):
                 ).on_conflict(conflict_target=(Customer_subs.order_id, Customer_subs.recipe_name),
                               update={Customer_subs.substitute_ingredient : option['substitute_ingredient'],
                                       Customer_subs.order_status : option['order_status']}, ).execute()
+
+                sqs_queue.connect()
+                sqs_queue.send_message({"order_id": order_id,
+                                        "recipe_name": option['recipe_name'],
+                                        "actual_ingredient": option['actual_ingredient'],
+                                        "substitute_ingredient":option['substitute_ingredient'],
+                                        "order_status": option['order_status']
+                                        })
+
             return {"msg": "success"}, 200
         except Exception:
             return {"msg": "Something went wrong"}, 500

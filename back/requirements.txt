@@ -11,3 +11,4 @@ yoyo-migrations==7.3.2
 psycopg2-binary==2.8.3
 peewee==3.9.6
 Flask-Cors==3.0.9
+boto3==1.21.32
