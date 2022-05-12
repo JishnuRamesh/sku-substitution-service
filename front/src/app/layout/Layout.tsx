@@ -1,4 +1,4 @@
-import { Container } from "@hellofresh/scm-design-system";
+import { Container } from "@mui/material";
 import { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import { AuthStatus } from "../core/auth/AuthStatus";

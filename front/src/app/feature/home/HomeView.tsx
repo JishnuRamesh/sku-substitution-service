@@ -1,13 +1,11 @@
 import ENV from "@config/env.json";
-import { Button, Icons } from "@hellofresh/scm-design-system";
+import { Button } from "@mui/material";
 import gifPath from "assets/gif-example.gif";
 import jpgPath from "assets/jpg-example.jpg";
 import svgPath from "assets/logo.svg";
 import pngPath from "assets/png-example.png";
 import { Link } from "react-router-dom";
 import { CardsView } from "../cards/CardsView";
-
-const { Activation, BoxOrdered, DeliveryTruckMoving } = Icons;
 
 export function HomeView() {
   return (
@@ -17,12 +15,12 @@ export function HomeView() {
       <p>{JSON.stringify(ENV)}</p>
       <h2>Routes</h2>
       <Link to="signin" style={{ textDecoration: "none" }}>
-        <Button color="primary" label="Go to login" variant="primary" />
+        <Button>Sign in</Button>
       </Link>
       <br />
       <br />
       <Link to="lorem" style={{ textDecoration: "none" }}>
-        <Button color="primary" label="Go to random route" variant="primary" />
+        <Button>Other</Button>
       </Link>
       <br />
       <br />
@@ -30,9 +28,6 @@ export function HomeView() {
       <CardsView />
       <br />
       <br />
-      <Activation size="medium" />
-      <BoxOrdered state="active" />
-      <DeliveryTruckMoving />
       <h2>Images</h2>
       <section style={{ display: "flex", flexWrap: "wrap" }}>
         <img src={gifPath} height={300} width={550} alt="GIF Example" />
