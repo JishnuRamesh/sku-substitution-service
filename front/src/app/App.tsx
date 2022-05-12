@@ -6,7 +6,7 @@ import { Layout } from "./layout/Layout";
 export type SelectedOption = {
   recipe_name: string;
   actual_ingredient: string;
-  substituted_ingredient: string;
+  substitute_ingredient: string;
   order_status: string;
 };
 

@@ -46,25 +46,21 @@ export const skuSubApiRequests: SkuSubRequestMap = () => ({
     transformResponse: (
       response: HttpResponse<GetOptionsResponse>
     ): ApiResponse<CustomerSwapOptions> => {
-      response.data.options_available.push({
-        actual_ingredient: "Salmon",
-        order_id: {
-          customer_id: {
-            address: "879 Edgewood Road",
-            customer_id: "367676",
-            email_address: "tester1@gmail.com",
-            name: "Abhi",
-          },
-          customer_swaps: "A2_B2_C2",
-          order_id: "121221",
-          week: "2022-W20",
-        },
-        recipe_name: "Asian style pokebowl",
-        swap_name: "F2",
-        swap_options: ["Barramundi", "Chicken"],
-      });
       return {
         data: response.data,
+      };
+    },
+  },
+  postSkuSubOptions: {
+    url: `/sku-sub-options/:orderId`,
+    method: "POST",
+    path: ["orderId"],
+    data: ["sub_options"],
+    transformResponse: (
+      response: HttpResponse<{ msg: string }>
+    ): ApiResponse<string> => {
+      return {
+        data: response.data.msg,
       };
     },
   },

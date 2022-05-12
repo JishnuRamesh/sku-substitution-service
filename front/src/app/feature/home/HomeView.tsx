@@ -1,4 +1,4 @@
-import { SelectedOptions } from "@app/App";
+import { SelectedOption, SelectedOptions } from "@app/App";
 import { useApiContext } from "@app/core/api/ApiContext";
 import { RecipeSwapCard } from "@app/feature/home/RecipeSwapCard";
 import { Grid } from "@mui/material";
@@ -87,7 +87,7 @@ export const HomeView: React.FC<{
     nextSelectedOptions[recipe] = {
       recipe_name: recipe,
       actual_ingredient: ingredient,
-      substituted_ingredient: selection,
+      substitute_ingredient: selection,
       order_status: "PENDING",
     };
     console.log("next selected: ", nextSelectedOptions);
@@ -118,6 +118,25 @@ export const HomeView: React.FC<{
   useEffect(() => {
     if (props.isDone) {
       console.log("WILL POST:", props.selectedOptions);
+      const sub_options: SelectedOption[] = Object.values(
+        props.selectedOptions
+      );
+      api
+        ?.apiRequest<
+          { orderId: string; sub_options: SelectedOption[] },
+          string
+        >(`postSkuSubOptions`, {
+          orderId,
+          sub_options,
+        })
+        .then((res) => {
+          if (res.data) {
+            console.log("POST SUCCESS", res);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
   }, [api, props.selectedOptions, props.isDone]);
 
