@@ -1,9 +1,12 @@
+import flask
 from flask import Flask
 from migrations import apply_migrations
 from flask import request
-from models.subs import Sub_options, Customer_subs
+from models.subs import Sub_options, Customer_subs,Orders
 from playhouse.shortcuts import model_to_dict
 from flask_cors import CORS
+import csv
+import io
 
 app = Flask(__name__)
 
@@ -50,3 +53,40 @@ def order(order_id):
         except Exception as ex:
             print(ex)
             return {"msg": "Something went wrong"}, 500
+
+
+@app.route("/sku-sub-options/close/<week>", methods=['GET'])
+def closeSubstitutionByWeek(week):
+    columns = [
+        "order_id",
+        "recipe_name",
+        "actual_ingredient",
+        "substitute_ingredient",
+        "order_status"
+    ]
+
+    try:
+        substitutes = Sub_options.select().join(Orders, on=Orders.order_id == Sub_options.order_id).where(
+            Orders.week == week)
+        file = io.StringIO()
+        writer = csv.DictWriter(file, fieldnames=columns)
+        writer.writeheader()
+
+        export = []
+        for substitute_data in substitutes:
+            data = {
+                "order_Id": substitute_data.order_Id,
+                "recipe_name": substitute_data.recipe_name,
+                "actual_ingredient": substitute_data.actual_ingredient,
+                "substitute_ingredient": substitute_data.actual_ingredient,
+                "order_status": substitute_data.order_status,
+            }
+            export.append(data)
+
+        writer.writerows(export)
+        response = flask.make_response(file.read())
+        response.headers['content-type'] = 'application/octet-stream'
+        return response
+    except Exception as ex:
+        print(ex)
+        return {"msg": "Data was not exported"}, 500
