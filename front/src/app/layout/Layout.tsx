@@ -6,12 +6,13 @@ import { Navbar } from "./Navbar";
 
 type LayoutProps = {
   children?: ReactNode;
+  onDoneAll: () => void;
 };
 
-export function Layout({ children }: LayoutProps) {
+export function Layout({ children, onDoneAll }: LayoutProps) {
   return (
     <>
-      <Navbar />
+      <Navbar onDoneAll={onDoneAll} />
 
       <Container
         maxWidth="lg"

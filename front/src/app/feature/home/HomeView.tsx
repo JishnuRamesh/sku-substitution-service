@@ -1,7 +1,8 @@
+import { SelectedOptions } from "@app/App";
 import { useApiContext } from "@app/core/api/ApiContext";
 import { RecipeSwapCard } from "@app/feature/home/RecipeSwapCard";
 import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Order = {
   customer_id: {
@@ -37,28 +38,62 @@ export type CustomerSwapOptions = {
   options_available: CustomerSwapOption[];
 };
 
-const SwapOptions: React.FC<CustomerSwapOptions> = (props) => {
+const SwapOptions: React.FC<
+  CustomerSwapOptions & {
+    onChange: (recipe: string, ingredient: string, selection: string) => void;
+  }
+> = (props) => {
   return (
     <Grid container spacing={2}>
       {props.options_available.map((option, index) => (
-        <Grid item xs={12} sm={6}>
-          <SwapOption key={`Swap-${index}`} {...option} />
+        <Grid key={`Swap-${index}`} item xs={12} sm={6}>
+          <SwapOption {...option} onChange={props.onChange} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
-const SwapOption: React.FC<CustomerSwapOption> = (props) => {
-  return <RecipeSwapCard {...props} />;
+const SwapOption: React.FC<
+  CustomerSwapOption & {
+    onChange: (recipe: string, ingredient: string, selection: string) => void;
+  }
+> = (props) => {
+  return (
+    <RecipeSwapCard
+      recipe_name={props.recipe_name}
+      actual_ingredient={props.actual_ingredient}
+      swap_options={props.swap_options}
+      onChange={(selection: string) => {
+        props.onChange(props.recipe_name, props.actual_ingredient, selection);
+      }}
+    />
+  );
 };
 
-export function HomeView() {
+export const HomeView: React.FC<{
+  onSelected: (options: SelectedOptions) => void;
+  selectedOptions: SelectedOptions;
+  isDone: boolean;
+}> = (props) => {
   const api = useApiContext();
   const [customerSwapOptions, setCustomerSwapOptions] =
     useState<CustomerSwapOptions>({ options_available: [] });
   const [order, setOrder] = useState<Order | null>(null);
   const orderId = "121221";
+
+  const onChange = (recipe: string, ingredient: string, selection: string) => {
+    const nextSelectedOptions = props.selectedOptions;
+    nextSelectedOptions[recipe] = {
+      recipe_name: recipe,
+      actual_ingredient: ingredient,
+      substituted_ingredient: selection,
+      order_status: "PENDING",
+    };
+    console.log("next selected: ", nextSelectedOptions);
+    props.onSelected(nextSelectedOptions);
+  };
+
   useEffect(() => {
     api
       ?.apiRequest<{ orderId: string }, CustomerSwapOptions>(
@@ -80,6 +115,12 @@ export function HomeView() {
       });
   }, [api]);
 
+  useEffect(() => {
+    if (props.isDone) {
+      console.log("WILL POST:", props.selectedOptions);
+    }
+  }, [api, props.selectedOptions, props.isDone]);
+
   if (customerSwapOptions.options_available.length === 0) {
     return null;
   }
@@ -100,7 +141,7 @@ export function HomeView() {
         That's why this week, you have the option of swapping the following
         options.
       </p>
-      <SwapOptions {...customerSwapOptions} />
+      <SwapOptions {...customerSwapOptions} onChange={onChange} />
       <p>
         We've made some slight tweaks to the recipe instructions but don't worry
         - we will send you updated recipe instructions before your box arrives
@@ -113,4 +154,4 @@ export function HomeView() {
       </p>
     </div>
   );
-}
+};

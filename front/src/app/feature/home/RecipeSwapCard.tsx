@@ -10,17 +10,25 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-const RenderSwapOptions: React.FC<{ options: string[] }> = (props) => {
+const RecipeSwapOptions: React.FC<{
+  options: string[];
+  onChange: (selection: string) => void;
+}> = (props) => {
   return (
     <FormControl>
       <RadioGroup
         aria-labelledby="demo-radio-buttons-group-label"
         defaultValue="none"
         name="radio-buttons-group"
+        onChange={(e) => {
+          console.log(e.target.value);
+          props.onChange(e.target.value);
+        }}
       >
         {props.options.map((option, index) => {
           return (
             <FormControlLabel
+              key={`SwapOption-${index}`}
               value={option}
               control={<Radio />}
               label={option}
@@ -28,6 +36,7 @@ const RenderSwapOptions: React.FC<{ options: string[] }> = (props) => {
           );
         })}
         <FormControlLabel
+          key={`SwapOption-${props.options.length}`}
           value="none"
           control={<Radio />}
           label="No Preference"
@@ -37,12 +46,13 @@ const RenderSwapOptions: React.FC<{ options: string[] }> = (props) => {
   );
 };
 
-type RecipeSwapProps = {
+type RecipeSwapCardProps = {
   recipe_name: string;
   actual_ingredient: string;
   swap_options: string[];
+  onChange: (selection: string) => void;
 };
-export const RecipeSwapCard: React.FC<RecipeSwapProps> = (props) => {
+export const RecipeSwapCard: React.FC<RecipeSwapCardProps> = (props) => {
   return (
     <Card sx={{ maxWidth: 345 }} style={{ margin: "auto" }}>
       <CardMedia
@@ -58,7 +68,12 @@ export const RecipeSwapCard: React.FC<RecipeSwapProps> = (props) => {
         <Typography gutterBottom variant="subtitle2" component="div">
           Available Options
         </Typography>
-        <div>{RenderSwapOptions({ options: props.swap_options })}</div>
+        <div>
+          <RecipeSwapOptions
+            options={props.swap_options}
+            onChange={props.onChange}
+          />
+        </div>
       </CardContent>
     </Card>
   );
