@@ -30,7 +30,6 @@
   "dependencies": {
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.8.1",
-    "@hellofresh/scm-design-system": "1.0.0-canary-9",
     "@mui/icons-material": "5.4.4",
     "@mui/lab": "5.0.0-alpha.71",
     "@mui/material": "5.4.4",

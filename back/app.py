@@ -3,8 +3,15 @@ from migrations import apply_migrations
 from flask import request
 from models.subs import Sub_options
 from playhouse.shortcuts import model_to_dict
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(
+    app,
+    resources={r"*": {"origins": '*'}},
+    supports_credentials=True,
+)
 
 apply_migrations()
 

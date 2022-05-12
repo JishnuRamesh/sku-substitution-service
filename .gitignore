@@ -133,8 +133,8 @@ dmypy.json
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
+node_modules
+.pnp
 .pnp.js
 .npmrc
 
@@ -152,7 +152,7 @@ coverage
 cache
 
 # env
-src/config/env.json
+env.json
 
 # IDEs and editors
 /.idea

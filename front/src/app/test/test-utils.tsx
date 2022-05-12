@@ -1,15 +1,9 @@
-import { SCMTheme } from "@hellofresh/scm-design-system";
-import {
-  adaptV4Theme,
-  createTheme,
-  StyledEngineProvider,
-  Theme,
-} from "@mui/material";
+import { createTheme, StyledEngineProvider } from "@mui/material";
 import { render, RenderOptions } from "@testing-library/react";
 import { FC, ReactElement } from "react";
 import { ThemeProvider } from "styled-components";
 
-const customTheme = createTheme(adaptV4Theme(SCMTheme as Theme));
+const customTheme = createTheme();
 
 const AllTheProviders: FC = ({ children }) => {
   return (

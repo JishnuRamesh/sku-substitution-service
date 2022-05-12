@@ -1,4 +1,4 @@
-import { Button } from "@hellofresh/scm-design-system";
+import { Button } from "@mui/material";
 import { useState } from "react";
 
 export const CounterView = () => {
@@ -19,12 +19,7 @@ export const CounterView = () => {
         Down
       </button>
 
-      <Button
-        fullWidth
-        color="primary"
-        label="Sign In with Azure"
-        variant="primary"
-      />
+      <Button>Sign In with Azure</Button>
     </>
   );
 };

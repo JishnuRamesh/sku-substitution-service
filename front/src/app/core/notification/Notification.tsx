@@ -1,4 +1,4 @@
-import { SnackbarNotification } from "@hellofresh/scm-design-system";
+import { Snackbar } from "@mui/material";
 import { FC, useState } from "react";
 
 type SnackbarVariants = "error" | "warning" | "success" | "info" | "neutral";
@@ -25,18 +25,6 @@ export function Notification({
   const id = Date.now().toString();
 
   return open ? (
-    <SnackbarNotification
-      id={id}
-      open={isOpen}
-      message={title}
-      subText={message}
-      icon={icon}
-      delay={delay}
-      onClose={() => {
-        setIsOpen(false);
-        return console.log("Notification Closed");
-      }}
-      severity={severity}
-    />
+    <Snackbar id={id} open={isOpen} message={title + " " + message} />
   ) : null;
 }
