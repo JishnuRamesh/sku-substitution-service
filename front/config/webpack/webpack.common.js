@@ -48,7 +48,7 @@ module.exports = {
     alias: {
       "@app": `${paths.src}/app`,
       "@assets": [`${paths.src}/assets`],
-      "@io": [`${paths.src}/io`],
+      "@services": [`${paths.src}/io`],
       "@config": [`${paths.src}/config`],
       "@domain": [`${paths.src}/domain`],
       "@services": [`${paths.src}/services`],

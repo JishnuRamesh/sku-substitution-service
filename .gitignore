@@ -182,3 +182,4 @@ Thumbs.db
 # Volumes
 volumes/*
 
+!front/src/domain/lib/

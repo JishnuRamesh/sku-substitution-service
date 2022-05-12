@@ -7,14 +7,14 @@ export function HomeView() {
 
   useEffect(() => {
     api
-      ?.apiRequest<Record<string, unknown>, { msg: string }>(`helloWorld`, {})
+      ?.apiRequest<Record<string, unknown>, string>(`helloWorld`, {})
       .then((res) => {
-        const msg = res?.data?.msg;
+        const msg = res?.data;
         let status = "failed";
         if (msg) {
           status = msg;
         }
-        setApiResponse(status);
+        setApiResponse(status.toUpperCase());
       })
       .catch((error) => {
         console.error(error);
@@ -23,7 +23,7 @@ export function HomeView() {
   return (
     <div>
       <h1>Welcome to the SKU Substitution Service</h1>
-      <h3>The backend status is: {apiResponse.toUpperCase()}</h3>
+      <h3>The backend status is: {apiResponse}</h3>
     </div>
   );
 }
