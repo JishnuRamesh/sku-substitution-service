@@ -65,10 +65,23 @@ export const RecipeSwapCard: React.FC<RecipeSwapCardProps> = (props) => {
         <Typography gutterBottom variant="h5" component="div">
           {props.recipe_name}
         </Typography>
-        <Typography gutterBottom variant="subtitle2" component="div">
-          Available Options
+        <Typography
+          gutterBottom
+          variant="body2"
+          component="div"
+          style={{ backgroundColor: "#ffe480", padding: "5px" }}
+        >
+          Unfortunately <b>{props.actual_ingredient}</b> is unavilable
         </Typography>
-        <div>
+        <Typography
+          gutterBottom
+          variant="subtitle2"
+          component="div"
+          style={{ backgroundColor: "#f5f5f5", padding: "5px" }}
+        >
+          Please select one of the following
+        </Typography>
+        <div style={{ backgroundColor: "#f5f5f5", padding: "5px" }}>
           <RecipeSwapOptions
             options={props.swap_options}
             onChange={props.onChange}
